@@ -15,7 +15,7 @@ public class CarRowMapper implements RowMapper<Car>
                 rs.getString("mark"),
                 rs.getString("model"),
                 rs.getInt("nbcv"),
-                rs.getObject("year", LocalDate.class),
+                rs.getObject("production_year", LocalDate.class),
                 rs.getDouble("weight"),
                 rs.getDouble("length"),
                 rs.getDouble("width"),

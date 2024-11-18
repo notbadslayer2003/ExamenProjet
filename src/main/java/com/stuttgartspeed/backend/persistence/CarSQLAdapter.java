@@ -20,9 +20,9 @@ public class CarSQLAdapter implements CarPort
     @Override
     public void saveCar(Car car)
     {
-        String sql = "INSERT INTO car (mark, model, nbcv, year, weight, length, width, height, price, box, transmission, energie, rapport, nbPortes, nbPlaces, cylinders) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO car (mark, model, nbcv, production_year, weight, length, width, height, price, box, transmission, energie, rapport, nbPortes, nbPlaces, cylinders) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     jdbc.update(sql, car.getMark(),car.getModel(),
-            car.getNbcv(),car.getYear(),
+            car.getNbcv(),car.getProduction_year(),
             car.getWeight(),car.getLength(),
             car.getWidth(),car.getHeight(),
             car.getPrice(),car.getBox(),
@@ -44,5 +44,12 @@ public class CarSQLAdapter implements CarPort
         String sql = "SELECT * FROM car";
         CarController.cars = (jdbc.query(sql, new CarRowMapper()));
         return CarController.cars;
+    }
+
+    @Override
+    public void delete(Long id)
+    {
+        String sql = "DELETE FROM car WHERE id = ?";
+        jdbc.update(sql,id);
     }
 }

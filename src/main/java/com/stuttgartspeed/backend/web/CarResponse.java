@@ -23,7 +23,7 @@ public class CarResponse
     private String mark;
     private String model;
     private Integer nbcv;
-    private LocalDate year;
+    private LocalDate production_year ;
     private Double weight;
     private Double length;
     private Double width;
@@ -43,7 +43,7 @@ public class CarResponse
                 .mark(car.getMark())
                 .model(car.getModel())
                 .nbcv(car.getNbcv())
-                .year(car.getYear())
+                .production_year(car.getProduction_year())
                 .weight(car.getWeight())
                 .length(car.getLength())
                 .width(car.getWidth())

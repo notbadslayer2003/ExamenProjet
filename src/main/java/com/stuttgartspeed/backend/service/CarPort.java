@@ -9,4 +9,5 @@ public interface CarPort
     void saveCar(Car car);
     Car findById(Long id);
     List<Car> findAll();
+    void delete(Long id);
 }

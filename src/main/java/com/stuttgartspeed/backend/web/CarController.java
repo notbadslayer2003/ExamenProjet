@@ -53,6 +53,7 @@ public class CarController
     public ResponseEntity<Void> removeAnimal(@PathVariable long id)
     {
         cars.remove(id-1);
+        carUseCase.delete(cars.get((int) (id-1)));
 
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }

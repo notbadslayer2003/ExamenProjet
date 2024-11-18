@@ -17,7 +17,7 @@ public class Car
     private String mark;
     private String model;
     private Integer nbcv;
-    private LocalDate year;
+    private LocalDate production_year ;
     private Double weight;
     private Double length;
     private Double width;

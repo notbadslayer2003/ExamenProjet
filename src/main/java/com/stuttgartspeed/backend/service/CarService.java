@@ -29,8 +29,8 @@ public class CarService implements CarUseCase
     }
 
     @Override
-    public void delete(Car car) {
-
+    public void delete(Car car)
+    {
+        carPort.delete(car.getId());
     }
-
 }

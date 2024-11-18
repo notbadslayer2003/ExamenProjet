@@ -25,7 +25,7 @@ public class CarRequest
     private Integer nbcv;
     @NotNull
     @Past
-    private LocalDate year;
+    private LocalDate production_year;
     @NotNull
     @Min(value=0)
     private Double weight;
@@ -70,7 +70,7 @@ public class CarRequest
     {
         return Car.builder().mark(mark)
                 .model(model).nbcv(nbcv)
-                .year(year).weight(weight)
+                .production_year(production_year).weight(weight)
                 .length(length).width(width)
                 .height(height).price(price)
                 .box(box).transmission(transmission)
