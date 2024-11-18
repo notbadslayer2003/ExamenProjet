@@ -43,7 +43,7 @@ public class CarController
     @PostMapping("/car")
     public ResponseEntity<Car> addCar(@Valid @RequestBody CarRequest carRequest)
     {
-        Car car = CarRequest.toEntity();
+        Car car = carRequest.toEntity();
         carUseCase.save(car);
 
         return ResponseEntity.status(HttpStatus.CREATED).build();
