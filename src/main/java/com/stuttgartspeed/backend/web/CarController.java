@@ -10,23 +10,28 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+
 import static java.util.stream.Collectors.toList;
 
 @RestController
-@RequestMapping("/stuttgarspeed")
+@RequestMapping("/api/cars")
 @RequiredArgsConstructor
 public class CarController
 {
     public static List<Car> cars = new ArrayList<>();
     private final CarUseCase carUseCase;
 
-    @GetMapping("/cars")
+    @GetMapping
     public ResponseEntity<List<CarResponse>> getAllCars()
     {
-        carUseCase.findAll();
+        // Récupérer les voitures directement depuis le service
+        List<Car> cars = carUseCase.findAll();
+
+        // Transformer les entités en réponses
         List<CarResponse> listsCars = cars.stream()
-                .map(car -> CarResponse.fromEntity(car))
-                .collect(toList());
+                .map(CarResponse::fromEntity)
+                .collect(Collectors.toList());
 
         return ResponseEntity.status(HttpStatus.OK).body(listsCars);
     }
@@ -50,7 +55,7 @@ public class CarController
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> removeAnimal(@PathVariable long id)
+    public ResponseEntity<Void> removeCar(@PathVariable long id)
     {
         cars.remove(id-1);
         carUseCase.delete(cars.get((int) (id-1)));
