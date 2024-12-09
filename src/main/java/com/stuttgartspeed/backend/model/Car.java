@@ -87,4 +87,5 @@ public class Car
     @NotNull
     @Positive(message = "La cylindrée doit être un nombre positif.")
     private Double cylinders;
+    private String image;
 }

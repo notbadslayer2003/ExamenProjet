@@ -18,18 +18,19 @@ public class CarSQLAdapter implements CarPort
     }
 
     @Override
-    public void saveCar(Car car) {
-        String sql = "INSERT INTO car (mark, model, nbcv, production_year, weight, length, width, height, price, box, transmission, energie, rapport, \"NB_PORTES\", \"NB_PLACES\", cylinders) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-        jdbc.update(sql, car.getMark(), car.getModel(),
-                car.getNbcv(), car.getProduction_year(),
-                car.getWeight(), car.getLength(),
-                car.getWidth(), car.getHeight(),
-                car.getPrice(), car.getBox(),
-                car.getTransmission(), car.getEnergie(),
-                car.getRapport(), car.getNbPortes(),
-                car.getNbPlaces(), car.getCylinders());
+    public void saveCar(Car car)
+    {
+        String sql = "INSERT INTO car (mark, model, nbcv, production_year, weight, length, width, height, price, box, transmission, energie, rapport, nbPortes, nbPlaces, cylinders, image) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    jdbc.update(sql, car.getMark(),car.getModel(),
+            car.getNbcv(),car.getProduction_year(),
+            car.getWeight(),car.getLength(),
+            car.getWidth(),car.getHeight(),
+            car.getPrice(),car.getBox(),
+            car.getTransmission(),car.getEnergie(),
+            car.getRapport(),car.getNbPortes(),
+            car.getNbPlaces(),car.getCylinders(),
+            car.getImage());
     }
-
 
     @Override
     public Car findById(Long id)
@@ -41,8 +42,9 @@ public class CarSQLAdapter implements CarPort
     @Override
     public List<Car> findAll()
     {
-        String sql = "SELECT ID, MARK, MODEL, NBCV, PRODUCTION_YEAR, WEIGHT, LENGTH, WIDTH, HEIGHT, PRICE, BOX, TRANSMISSION, ENERGIE, RAPPORT, NB_PORTES, NB_PLACES, CYLINDERS FROM CAR";
-        return jdbc.query(sql, new CarRowMapper());
+        String sql = "SELECT * FROM car";
+        CarController.cars = (jdbc.query(sql, new CarRowMapper()));
+        return CarController.cars;
     }
 
     @Override

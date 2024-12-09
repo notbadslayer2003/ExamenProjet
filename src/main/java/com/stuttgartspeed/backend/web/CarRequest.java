@@ -65,6 +65,9 @@ public class CarRequest
     @NotNull
     @Min(value=0)
     private Double cylinders;
+    @NotNull
+    @NotBlank
+    private String image;
 
     public Car toEntity()
     {
@@ -76,6 +79,6 @@ public class CarRequest
                 .box(box).transmission(transmission)
                 .energie(energie).rapport(rapport)
                 .nbPortes(nbPortes).nbPlaces(nbPlaces)
-                .cylinders(cylinders).build();
+                .cylinders(cylinders).image(image).build();
     }
 }

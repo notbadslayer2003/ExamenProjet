@@ -16,5 +16,6 @@ CREATE TABLE car
     rapport         INT,
     nbPortes        INT,
     nbPlaces        INT,
-    cylinders       Double
+    cylinders       Double,
+    image           VARCHAR(100)
 );

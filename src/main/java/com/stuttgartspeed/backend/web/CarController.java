@@ -33,6 +33,11 @@ public class CarController
                 .map(CarResponse::fromEntity)
                 .collect(Collectors.toList());
 
+        if (cars.isEmpty())
+        {
+            throw new ResourceNotFoundException("No cars available.");
+        }
+
         return ResponseEntity.status(HttpStatus.OK).body(listsCars);
     }
 
@@ -40,6 +45,11 @@ public class CarController
     public ResponseEntity<CarResponse> getOneCar(@RequestParam("id") long id)
     {
         Car car = carUseCase.findById(id);
+
+        if (car == null)
+        {
+            throw new ResourceNotFoundException("Car with ID " + id + " not found.");
+        }
 
         CarResponse carResponse = CarResponse.fromEntity(car);
         return ResponseEntity.status(HttpStatus.OK).body(carResponse);
@@ -49,6 +59,9 @@ public class CarController
     public ResponseEntity<Car> addCar(@Valid @RequestBody CarRequest carRequest)
     {
         Car car = carRequest.toEntity();
+
+
+
         carUseCase.save(car);
 
         return ResponseEntity.status(HttpStatus.CREATED).build();
@@ -58,7 +71,15 @@ public class CarController
     public ResponseEntity<Void> removeCar(@PathVariable long id)
     {
         cars.remove(id-1);
-        carUseCase.delete(cars.get((int) (id-1)));
+        Car car = carUseCase.findById(id);
+
+
+        if (car == null)
+        {
+            throw new ResourceNotFoundException("Car with ID " + id + " not found.");
+        }
+
+        carUseCase.delete(car);
 
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
