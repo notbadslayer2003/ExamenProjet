@@ -1,6 +1,6 @@
-package com.stuttgartspeed.backend.exceptionhandler;
+package com.stuttgartspeed.backend.adapter.in.exceptionhandler;
 
-import com.stuttgartspeed.backend.web.*;
+import com.stuttgartspeed.backend.adapter.in.web.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
 import org.springframework.http.ResponseEntity;

@@ -1,6 +1,6 @@
-package com.stuttgartspeed.backend.persistence;
+package com.stuttgartspeed.backend.adapter.out.mapper;
 
-import com.stuttgartspeed.backend.model.Car;
+import com.stuttgartspeed.backend.application.domain.model.Car;
 import org.springframework.jdbc.core.RowMapper;
 
 import java.sql.ResultSet;

@@ -1,6 +1,6 @@
-package com.stuttgartspeed.backend.web;
+package com.stuttgartspeed.backend.adapter.in.web;
 
-import com.stuttgartspeed.backend.model.Car;
+import com.stuttgartspeed.backend.application.domain.model.Car;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -8,7 +8,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
-import java.util.List;
 
 import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL;
 

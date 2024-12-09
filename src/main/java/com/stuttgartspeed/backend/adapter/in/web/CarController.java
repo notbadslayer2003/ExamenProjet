@@ -1,8 +1,10 @@
-package com.stuttgartspeed.backend.web;
+package com.stuttgartspeed.backend.adapter.in.web;
 
-import com.stuttgartspeed.backend.model.Car;
-import com.stuttgartspeed.backend.service.CarUseCase;
+import com.stuttgartspeed.backend.application.domain.model.Car;
+import com.stuttgartspeed.backend.application.port.in.CarUseCase;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import jdk.jfr.Timestamp;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,28 +12,24 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
-
 import static java.util.stream.Collectors.toList;
 
 @RestController
-@RequestMapping("/api/cars")
+@RequestMapping("/stuttgartspeed")
+@Tag(name = "Car Controller" ,description = "Controller pour CRUD les véhicules")
 @RequiredArgsConstructor
 public class CarController
 {
     public static List<Car> cars = new ArrayList<>();
     private final CarUseCase carUseCase;
 
-    @GetMapping
+    @GetMapping("/cars")
     public ResponseEntity<List<CarResponse>> getAllCars()
     {
-        // Récupérer les voitures directement depuis le service
-        List<Car> cars = carUseCase.findAll();
-
-        // Transformer les entités en réponses
+        carUseCase.findAll();
         List<CarResponse> listsCars = cars.stream()
-                .map(CarResponse::fromEntity)
-                .collect(Collectors.toList());
+                .map(car -> CarResponse.fromEntity(car))
+                .collect(toList());
 
         if (cars.isEmpty())
         {

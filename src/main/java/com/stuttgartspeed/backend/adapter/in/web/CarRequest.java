@@ -1,6 +1,6 @@
-package com.stuttgartspeed.backend.web;
+package com.stuttgartspeed.backend.adapter.in.web;
 
-import com.stuttgartspeed.backend.model.Car;
+import com.stuttgartspeed.backend.application.domain.model.Car;
 import jakarta.validation.constraints.*;
 import lombok.*;
 

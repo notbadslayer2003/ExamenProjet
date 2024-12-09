@@ -1,4 +1,4 @@
-package com.stuttgartspeed.backend.web;
+package com.stuttgartspeed.backend.adapter.in.web;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

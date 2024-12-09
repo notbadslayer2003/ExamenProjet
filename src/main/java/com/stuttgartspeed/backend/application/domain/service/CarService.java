@@ -1,7 +1,8 @@
-package com.stuttgartspeed.backend.service;
+package com.stuttgartspeed.backend.application.domain.service;
 
-import com.stuttgartspeed.backend.Exception.CarNotFoundException;
-import com.stuttgartspeed.backend.model.Car;
+import com.stuttgartspeed.backend.application.domain.model.Car;
+import com.stuttgartspeed.backend.application.port.out.CarPort;
+import com.stuttgartspeed.backend.application.port.in.CarUseCase;
 
 import java.util.List;
 
@@ -14,11 +15,7 @@ public class CarService implements CarUseCase
     @Override
     public Car findById(Long id)
     {
-        Car car = carPort.findById(id);
-        if(car == null){
-            throw new CarNotFoundException("Car ith ID " + id + " not found");
-        }
-        return car;
+        return carPort.findById(id);
     }
 
     @Override

@@ -1,4 +1,4 @@
-package com.stuttgartspeed.backend.web;
+package com.stuttgartspeed.backend.adapter.in.web;
 
 public class InvalidRequestException extends RuntimeException
 {

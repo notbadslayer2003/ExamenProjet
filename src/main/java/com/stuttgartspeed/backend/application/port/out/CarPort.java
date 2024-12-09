@@ -1,6 +1,6 @@
-package com.stuttgartspeed.backend.service;
+package com.stuttgartspeed.backend.application.port.out;
 
-import com.stuttgartspeed.backend.model.Car;
+import com.stuttgartspeed.backend.application.domain.model.Car;
 
 import java.util.List;
 

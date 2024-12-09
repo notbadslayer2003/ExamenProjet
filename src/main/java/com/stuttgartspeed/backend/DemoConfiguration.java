@@ -1,8 +1,8 @@
 package com.stuttgartspeed.backend;
 
-import com.stuttgartspeed.backend.service.CarPort;
-import com.stuttgartspeed.backend.service.CarService;
-import com.stuttgartspeed.backend.service.CarUseCase;
+import com.stuttgartspeed.backend.application.port.out.CarPort;
+import com.stuttgartspeed.backend.application.domain.service.CarService;
+import com.stuttgartspeed.backend.application.port.in.CarUseCase;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

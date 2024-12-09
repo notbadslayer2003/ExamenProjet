@@ -1,8 +1,9 @@
-package com.stuttgartspeed.backend.persistence;
+package com.stuttgartspeed.backend.adapter.out;
 
-import com.stuttgartspeed.backend.model.Car;
-import com.stuttgartspeed.backend.service.CarPort;
-import com.stuttgartspeed.backend.web.CarController;
+import com.stuttgartspeed.backend.application.domain.model.Car;
+import com.stuttgartspeed.backend.application.port.out.CarPort;
+import com.stuttgartspeed.backend.adapter.in.web.CarController;
+import com.stuttgartspeed.backend.adapter.out.mapper.CarRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
