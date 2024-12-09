@@ -27,7 +27,8 @@ public class CarRowMapper implements RowMapper<Car>
                 rs.getInt("rapport"),
                 rs.getInt("nbPortes"),
                 rs.getInt("nbPlaces"),
-                rs.getDouble("cylinders"));
+                rs.getDouble("cylinders"),
+                rs.getString("image"));
     }
 }
 

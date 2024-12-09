@@ -36,6 +36,7 @@ public class CarResponse
     private Integer nbPortes;
     private Integer nbPlaces;
     private Double cylinders;
+    private String image;
 
     public static CarResponse fromEntity(Car car)
     {
@@ -55,6 +56,8 @@ public class CarResponse
                 .rapport(car.getRapport())
                 .nbPortes(car.getNbPortes())
                 .nbPlaces(car.getNbPlaces())
-                .cylinders(car.getCylinders()).build();
+                .cylinders(car.getCylinders())
+                .image(car.getImage())
+                .build();
     }
 }

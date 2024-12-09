@@ -20,7 +20,7 @@ public class CarSQLAdapter implements CarPort
     @Override
     public void saveCar(Car car)
     {
-        String sql = "INSERT INTO car (mark, model, nbcv, production_year, weight, length, width, height, price, box, transmission, energie, rapport, nbPortes, nbPlaces, cylinders) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO car (mark, model, nbcv, production_year, weight, length, width, height, price, box, transmission, energie, rapport, nbPortes, nbPlaces, cylinders, image) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     jdbc.update(sql, car.getMark(),car.getModel(),
             car.getNbcv(),car.getProduction_year(),
             car.getWeight(),car.getLength(),
@@ -28,7 +28,8 @@ public class CarSQLAdapter implements CarPort
             car.getPrice(),car.getBox(),
             car.getTransmission(),car.getEnergie(),
             car.getRapport(),car.getNbPortes(),
-            car.getNbPlaces(),car.getCylinders());
+            car.getNbPlaces(),car.getCylinders(),
+            car.getImage());
     }
 
     @Override

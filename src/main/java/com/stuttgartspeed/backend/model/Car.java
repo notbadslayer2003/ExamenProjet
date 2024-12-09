@@ -30,4 +30,5 @@ public class Car
     private Integer nbPortes;
     private Integer nbPlaces;
     private Double cylinders;
+    private String image;
 }
