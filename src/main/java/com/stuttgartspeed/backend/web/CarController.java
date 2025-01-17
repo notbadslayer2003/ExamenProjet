@@ -78,4 +78,34 @@ public class CarController
 
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
+
+    @PutMapping("car/{id}")
+    public ResponseEntity<CarResponse> updateCar(@PathVariable long id, @Valid @RequestBody CarRequest carRequest)
+    {
+        Car existingCar = carUseCase.findById(id);
+
+        if (existingCar == null)
+        {
+            throw new ResourceNotFoundException("Car with ID " + id + " not found.");
+
+        }
+
+        existingCar.setMark(carRequest.getMark());
+        existingCar.setModel(carRequest.getModel());
+        existingCar.setPrice(carRequest.getPrice());
+        existingCar.setImage(carRequest.getImage());
+        existingCar.setNbcv(carRequest.getNbcv());
+        existingCar.setEnergie(carRequest.getEnergie());
+        existingCar.setBox(carRequest.getBox());
+        existingCar.setTransmission(carRequest.getTransmission());
+
+        carUseCase.save(existingCar);
+
+        cars.remove(id-1);
+        Car car = carUseCase.findById(id);
+        carUseCase.delete(car);
+
+        CarResponse updatedCarResponse = CarResponse.fromEntity(existingCar);
+        return ResponseEntity.status(HttpStatus.OK).body(updatedCarResponse);
+    }
 }
