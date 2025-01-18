@@ -24,6 +24,7 @@ public class SecurityConfig{
                 .cors(Customizer.withDefaults())
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/api/cars").permitAll()
+                        .requestMatchers("/custom/swagger-ui/**","/v3/api-docs/**", "/swagger-ui/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/cars/car", "/api/cars/{id}").authenticated()
                         .requestMatchers(HttpMethod.POST, "/api/cars/car").hasRole("admin")
                         .requestMatchers(HttpMethod.DELETE, "/api/cars/{id}").hasRole("admin")
