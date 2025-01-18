@@ -13,30 +13,26 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 
-
 import static java.util.stream.Collectors.toList;
 
 @RestController
 @RequestMapping("/api/cars")
-@Tag(name = "Car Controller" ,description = "Controller pour CRUD les véhicules")
+@Tag(name = "Car Controller", description = "Controller pour CRUD les véhicules")
 @RequiredArgsConstructor
 @CrossOrigin(origins = "http://localhost:5173")
-public class CarController
-{
+public class CarController {
     public static List<Car> cars = new ArrayList<>();
     private final CarUseCase carUseCase;
 
     @CrossOrigin(origins = "http://localhost:5173")
     @GetMapping
-    public ResponseEntity<List<CarResponse>> getAllCars()
-    {
+    public ResponseEntity<List<CarResponse>> getAllCars() {
         carUseCase.findAll();
         List<CarResponse> listsCars = cars.stream()
                 .map(car -> CarResponse.fromEntity(car))
                 .collect(toList());
 
-        if (cars.isEmpty())
-        {
+        if (cars.isEmpty()) {
             throw new ResourceNotFoundException("No cars available.");
         }
 
@@ -46,12 +42,10 @@ public class CarController
     @CrossOrigin(origins = "http://localhost:5173")
     @GetMapping("/car")
     @Secured("ROLE_USER")
-    public ResponseEntity<CarResponse> getOneCar(@RequestParam("id") long id)
-    {
+    public ResponseEntity<CarResponse> getOneCar(@RequestParam("id") long id) {
         Car car = carUseCase.findById(id);
 
-        if (car == null)
-        {
+        if (car == null) {
             throw new ResourceNotFoundException("Car with ID " + id + " not found.");
         }
 
@@ -62,8 +56,7 @@ public class CarController
     @CrossOrigin(origins = "http://localhost:5173")
     @PostMapping("/car")
     @Secured("ROLE_ADMIN")
-    public ResponseEntity<Car> addCar(@Valid @RequestBody CarRequest carRequest)
-    {
+    public ResponseEntity<Car> addCar(@Valid @RequestBody CarRequest carRequest) {
         Car car = carRequest.toEntity();
         carUseCase.save(car);
 
@@ -73,19 +66,44 @@ public class CarController
     @CrossOrigin(origins = "http://localhost:5173")
     @DeleteMapping("/{id}")
     @Secured("ROLE_ADMIN")
-    public ResponseEntity<Void> removeCar(@PathVariable long id)
-    {
-        cars.remove(id-1);
+    public ResponseEntity<Void> removeCar(@PathVariable long id) {
+        cars.remove(id - 1);
         Car car = carUseCase.findById(id);
 
-
-        if (car == null)
-        {
+        if (car == null) {
             throw new ResourceNotFoundException("Car with ID " + id + " not found.");
         }
 
         carUseCase.delete(car);
 
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
+    @PutMapping("car/{id}")
+    public ResponseEntity<CarResponse> updateCar(@PathVariable long id, @Valid @RequestBody CarRequest carRequest) {
+        Car existingCar = carUseCase.findById(id);
+
+        if (existingCar == null) {
+            throw new ResourceNotFoundException("Car with ID " + id + " not found.");
+
+        }
+
+        existingCar.setMark(carRequest.getMark());
+        existingCar.setModel(carRequest.getModel());
+        existingCar.setPrice(carRequest.getPrice());
+        existingCar.setImage(carRequest.getImage());
+        existingCar.setNbcv(carRequest.getNbcv());
+        existingCar.setEnergie(carRequest.getEnergie());
+        existingCar.setBox(carRequest.getBox());
+        existingCar.setTransmission(carRequest.getTransmission());
+
+        carUseCase.save(existingCar);
+
+        cars.remove(id - 1);
+        Car car = carUseCase.findById(id);
+        carUseCase.delete(car);
+
+        CarResponse updatedCarResponse = CarResponse.fromEntity(existingCar);
+        return ResponseEntity.status(HttpStatus.OK).body(updatedCarResponse);
     }
 }
