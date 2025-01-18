@@ -9,3 +9,5 @@ services:
       - 'MYSQL_USER=user'
     ports:
       - '3306:3306'
+    volumes:
+      - ./src/main/resources/db:/docker-entrypoint-initdb.d:ro

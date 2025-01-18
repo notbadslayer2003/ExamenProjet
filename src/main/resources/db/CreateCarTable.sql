@@ -4,7 +4,7 @@ CREATE TABLE car
     mark            VARCHAR(30),
     model           VARCHAR(30),
     nbcv            INT,
-    year            DATE,
+    production_year DATE,
     weight          Double,
     length          Double,
     width           Double,
@@ -17,5 +17,5 @@ CREATE TABLE car
     nbPortes        INT,
     nbPlaces        INT,
     cylinders       Double,
-    image           VARCHAR(100)
+    image           VARCHAR(255)
 );

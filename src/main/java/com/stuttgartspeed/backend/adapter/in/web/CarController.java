@@ -4,26 +4,30 @@ import com.stuttgartspeed.backend.application.domain.model.Car;
 import com.stuttgartspeed.backend.application.port.in.CarUseCase;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
-import jdk.jfr.Timestamp;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+
+
 import static java.util.stream.Collectors.toList;
 
 @RestController
-@RequestMapping("/stuttgartspeed")
+@RequestMapping("/api/cars")
 @Tag(name = "Car Controller" ,description = "Controller pour CRUD les véhicules")
 @RequiredArgsConstructor
+@CrossOrigin(origins = "http://localhost:5173")
 public class CarController
 {
     public static List<Car> cars = new ArrayList<>();
     private final CarUseCase carUseCase;
 
-    @GetMapping("/cars")
+    @CrossOrigin(origins = "http://localhost:5173")
+    @GetMapping
     public ResponseEntity<List<CarResponse>> getAllCars()
     {
         carUseCase.findAll();
@@ -39,7 +43,9 @@ public class CarController
         return ResponseEntity.status(HttpStatus.OK).body(listsCars);
     }
 
+    @CrossOrigin(origins = "http://localhost:5173")
     @GetMapping("/car")
+    @Secured("ROLE_USER")
     public ResponseEntity<CarResponse> getOneCar(@RequestParam("id") long id)
     {
         Car car = carUseCase.findById(id);
@@ -53,19 +59,20 @@ public class CarController
         return ResponseEntity.status(HttpStatus.OK).body(carResponse);
     }
 
+    @CrossOrigin(origins = "http://localhost:5173")
     @PostMapping("/car")
+    @Secured("ROLE_ADMIN")
     public ResponseEntity<Car> addCar(@Valid @RequestBody CarRequest carRequest)
     {
         Car car = carRequest.toEntity();
-
-
-
         carUseCase.save(car);
 
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
+    @CrossOrigin(origins = "http://localhost:5173")
     @DeleteMapping("/{id}")
+    @Secured("ROLE_ADMIN")
     public ResponseEntity<Void> removeCar(@PathVariable long id)
     {
         cars.remove(id-1);

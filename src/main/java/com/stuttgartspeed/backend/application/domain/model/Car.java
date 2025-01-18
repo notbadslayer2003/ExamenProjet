@@ -1,9 +1,6 @@
 package com.stuttgartspeed.backend.application.domain.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -37,6 +34,7 @@ public class Car
 
     @NotNull
     @PastOrPresent(message = "L'année de production doit être dans le passé ou le présent.")
+    @Column(name = "year")
     private LocalDate production_year;
 
     @NotNull
