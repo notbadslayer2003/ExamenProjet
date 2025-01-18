@@ -28,6 +28,7 @@ public class SecurityConfig{
                         .requestMatchers(HttpMethod.GET, "/api/cars/car", "/api/cars/{id}").authenticated()
                         .requestMatchers(HttpMethod.POST, "/api/cars/car").hasRole("admin")
                         .requestMatchers(HttpMethod.DELETE, "/api/cars/{id}").hasRole("admin")
+                        .requestMatchers(HttpMethod.PUT, "/api/cars/car/{id}").hasRole("admin")
                         .anyRequest().permitAll()
                 )
                 .oauth2ResourceServer(oauth2 -> oauth2
