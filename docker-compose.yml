@@ -1,0 +1,13 @@
+services:
+  mysql:
+    container_name: 'stuttgartSpeedsql'
+    image: 'mysql:8'
+    environment:
+      - 'MYSQL_DATABASE=StuttgartSpeed'
+      - 'MYSQL_PASSWORD=123'
+      - 'MYSQL_ROOT_PASSWORD=root'
+      - 'MYSQL_USER=user'
+    ports:
+      - '3306:3306'
+    volumes:
+      - ./src/main/resources/db:/docker-entrypoint-initdb.d:ro
