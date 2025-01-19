@@ -19,12 +19,12 @@ import static java.util.stream.Collectors.toList;
 @RequestMapping("/api/cars")
 @Tag(name = "Car Controller", description = "Controller pour CRUD les véhicules")
 @RequiredArgsConstructor
-@CrossOrigin(origins = "http://localhost:5173")
+@CrossOrigin(origins = "https://stuttgartspeed-fe.onrender.com")
 public class CarController {
     public static List<Car> cars = new ArrayList<>();
     private final CarUseCase carUseCase;
 
-    @CrossOrigin(origins = "http://localhost:5173")
+    @CrossOrigin(origins = "https://stuttgartspeed-fe.onrender.com")
     @GetMapping
     public ResponseEntity<List<CarResponse>> getAllCars() {
         carUseCase.findAll();
@@ -39,7 +39,7 @@ public class CarController {
         return ResponseEntity.status(HttpStatus.OK).body(listsCars);
     }
 
-    @CrossOrigin(origins = "http://localhost:5173")
+    @CrossOrigin(origins = "https://stuttgartspeed-fe.onrender.com")
     @GetMapping("/car")
     @Secured("ROLE_USER")
     public ResponseEntity<CarResponse> getOneCar(@RequestParam("id") long id) {
@@ -53,7 +53,7 @@ public class CarController {
         return ResponseEntity.status(HttpStatus.OK).body(carResponse);
     }
 
-    @CrossOrigin(origins = "http://localhost:5173")
+    @CrossOrigin(origins = "https://stuttgartspeed-fe.onrender.com")
     @PostMapping("/car")
     @Secured("ROLE_ADMIN")
     public ResponseEntity<Car> addCar(@Valid @RequestBody CarRequest carRequest) {
@@ -63,7 +63,7 @@ public class CarController {
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
-    @CrossOrigin(origins = "http://localhost:5173")
+    @CrossOrigin(origins = "https://stuttgartspeed-fe.onrender.com")
     @DeleteMapping("/{id}")
     @Secured("ROLE_ADMIN")
     public ResponseEntity<Void> removeCar(@PathVariable long id) {
@@ -79,6 +79,7 @@ public class CarController {
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
+    @CrossOrigin(origins = "https://stuttgartspeed-fe.onrender.com")
     @PutMapping("car/{id}")
     public ResponseEntity<CarResponse> updateCar(@PathVariable long id, @Valid @RequestBody CarRequest carRequest) {
         Car existingCar = carUseCase.findById(id);
