@@ -34,7 +34,6 @@ public class Car
 
     @NotNull
     @PastOrPresent(message = "L'année de production doit être dans le passé ou le présent.")
-    @Column(name = "year")
     private LocalDate production_year;
 
     @NotNull
