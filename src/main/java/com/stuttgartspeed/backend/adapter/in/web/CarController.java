@@ -10,7 +10,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static java.util.stream.Collectors.toList;
@@ -21,74 +20,62 @@ import static java.util.stream.Collectors.toList;
 @RequiredArgsConstructor
 @CrossOrigin(origins = "https://stuttgartspeed-fe.onrender.com")
 public class CarController {
-    public static List<Car> cars = new ArrayList<>();
+
     private final CarUseCase carUseCase;
 
-    @CrossOrigin(origins = "https://stuttgartspeed-fe.onrender.com")
     @GetMapping
     public ResponseEntity<List<CarResponse>> getAllCars() {
-        carUseCase.findAll();
-        List<CarResponse> listsCars = cars.stream()
-                .map(car -> CarResponse.fromEntity(car))
-                .collect(toList());
+        List<Car> cars = carUseCase.findAll();
 
-        if (cars.isEmpty()) {
+        if (cars == null || cars.isEmpty()) {
             throw new ResourceNotFoundException("No cars available.");
         }
 
-        return ResponseEntity.status(HttpStatus.OK).body(listsCars);
+        List<CarResponse> listCars = cars.stream()
+                .map(CarResponse::fromEntity)
+                .collect(toList());
+
+        return ResponseEntity.ok(listCars);
     }
 
-    @CrossOrigin(origins = "https://stuttgartspeed-fe.onrender.com")
     @GetMapping("/car")
     @Secured("ROLE_USER")
     public ResponseEntity<CarResponse> getOneCar(@RequestParam("id") long id) {
         Car car = carUseCase.findById(id);
-
         if (car == null) {
             throw new ResourceNotFoundException("Car with ID " + id + " not found.");
         }
-
-        CarResponse carResponse = CarResponse.fromEntity(car);
-        return ResponseEntity.status(HttpStatus.OK).body(carResponse);
+        return ResponseEntity.ok(CarResponse.fromEntity(car));
     }
 
-    @CrossOrigin(origins = "https://stuttgartspeed-fe.onrender.com")
     @PostMapping("/car")
     @Secured("ROLE_ADMIN")
-    public ResponseEntity<Car> addCar(@Valid @RequestBody CarRequest carRequest) {
+    public ResponseEntity<Void> addCar(@Valid @RequestBody CarRequest carRequest) {
         Car car = carRequest.toEntity();
         carUseCase.save(car);
-
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
-    @CrossOrigin(origins = "https://stuttgartspeed-fe.onrender.com")
     @DeleteMapping("/{id}")
     @Secured("ROLE_ADMIN")
     public ResponseEntity<Void> removeCar(@PathVariable long id) {
-        cars.remove(id - 1);
         Car car = carUseCase.findById(id);
-
         if (car == null) {
             throw new ResourceNotFoundException("Car with ID " + id + " not found.");
         }
-
         carUseCase.delete(car);
-
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        return ResponseEntity.noContent().build();
     }
 
-    @CrossOrigin(origins = "https://stuttgartspeed-fe.onrender.com")
     @PutMapping("car/{id}")
+    @Secured("ROLE_ADMIN")
     public ResponseEntity<CarResponse> updateCar(@PathVariable long id, @Valid @RequestBody CarRequest carRequest) {
         Car existingCar = carUseCase.findById(id);
-
         if (existingCar == null) {
             throw new ResourceNotFoundException("Car with ID " + id + " not found.");
-
         }
 
+        // Mise à jour des champs
         existingCar.setMark(carRequest.getMark());
         existingCar.setModel(carRequest.getModel());
         existingCar.setPrice(carRequest.getPrice());
@@ -97,14 +84,18 @@ public class CarController {
         existingCar.setEnergie(carRequest.getEnergie());
         existingCar.setBox(carRequest.getBox());
         existingCar.setTransmission(carRequest.getTransmission());
+        existingCar.setProduction_year(carRequest.getProduction_year());
+        existingCar.setWeight(carRequest.getWeight());
+        existingCar.setLength(carRequest.getLength());
+        existingCar.setWidth(carRequest.getWidth());
+        existingCar.setHeight(carRequest.getHeight());
+        existingCar.setRapport(carRequest.getRapport());
+        existingCar.setNbPortes(carRequest.getNbPortes());
+        existingCar.setNbPlaces(carRequest.getNbPlaces());
+        existingCar.setCylinders(carRequest.getCylinders());
 
         carUseCase.save(existingCar);
 
-        cars.remove(id - 1);
-        Car car = carUseCase.findById(id);
-        carUseCase.delete(car);
-
-        CarResponse updatedCarResponse = CarResponse.fromEntity(existingCar);
-        return ResponseEntity.status(HttpStatus.OK).body(updatedCarResponse);
+        return ResponseEntity.ok(CarResponse.fromEntity(existingCar));
     }
 }
